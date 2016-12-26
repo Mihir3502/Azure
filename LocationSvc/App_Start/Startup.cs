@@ -21,15 +21,23 @@ namespace LocationSvc.App_Start
 
         private void ConfigurationAuth(IAppBuilder app)
         {
-            var azureADBearerAuthOptions = new WindowsAzureActiveDirectoryBearerAuthenticationOptions
-            {
-                Tenant = ConfigurationManager.AppSettings["ida:Tenant"]
-            };
-            azureADBearerAuthOptions.TokenValidationParameters =
-                new System.IdentityModel.Tokens.TokenValidationParameters() {
-                    ValidAudience = ConfigurationManager.AppSettings["ida:Audiance"]
-                };
-            app.UseWindowsAzureActiveDirectoryBearerAuthentication(azureADBearerAuthOptions);
+            //var azureADBearerAuthOptions = new WindowsAzureActiveDirectoryBearerAuthenticationOptions
+            //{
+            //    Tenant = ConfigurationManager.AppSettings["ida:Tenant"],
+            //    Audience = ConfigurationManager.AppSettings["ida:Audience"]
+            //};
+            //azureADBearerAuthOptions.TokenValidationParameters =
+            //    new System.IdentityModel.Tokens.TokenValidationParameters() {
+            //        ValidAudience = ConfigurationManager.AppSettings["ida:Audience"]
+            //    };
+            //app.UseWindowsAzureActiveDirectoryBearerAuthentication(azureADBearerAuthOptions);
+            app.UseWindowsAzureActiveDirectoryBearerAuthentication(
+               new WindowsAzureActiveDirectoryBearerAuthenticationOptions
+               {
+                   Audience = ConfigurationManager.AppSettings["ida:Audience"],
+                   Tenant = ConfigurationManager.AppSettings["ida:Tenant"],
+               });
+
         }
     }
 }

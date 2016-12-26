@@ -4,7 +4,7 @@ var locationApp = angular.module('locationApp', ['AdalAngular']);
 
 locationApp.config(['$httpProvider', 'adalAuthenticationServiceProvider', function ($httpProvider, adalProvider) {
     var endpoints = {
-        "https://localhost:44387/":"80156425-3161-40aa-8f54-b9731ba95e54"
+        "https://localhost:44387":"80156425-3161-40aa-8f54-b9731ba95e54"
         //"https://JYTechnology.onmicrosoft.com/637952ee-4722-4d4d-8908-77b2893dd1df"
     };
 
@@ -12,17 +12,20 @@ locationApp.config(['$httpProvider', 'adalAuthenticationServiceProvider', functi
         instance: 'https://login.microsoftonline.com/',
         tenant: 'JYTechnology.onMicrosoft.com',
         clientId: "a3d084fd-d36a-49ac-9db1-bf92157650d0",
-        endpoints: endpoints
+        endpoints: endpoints,
+        cacheLocation: 'localStorage'
     }, $httpProvider);
 }]);
 
 var locationController = locationApp.controller("locationController", [
     '$scope', '$http', 'adalAuthenticationService',
-    function ($scope, $http,adalService) {
+    function ($scope, $http, adalService) {
+
     $scope.getLocation = function () {
         //$http.get("https://localhost:44387/api/Location?cityName=dc").success(function (location) {
-         //  $scope.city = location;
-       // });
+        //   $scope.city = location;
+        //});
+        alert('hi');
         $http({
             method: 'GET',
             url: 'https://localhost:44387/api/Location?cityName=dc'
@@ -42,6 +45,6 @@ var locationController = locationApp.controller("locationController", [
     }
 
     $scope.logout = function () {
-        adalService.logout();
+        adalService.logOut();
     }
 }]);
